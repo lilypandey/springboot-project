@@ -3,8 +3,18 @@
  */
 package org.example;
 
+import org.classes.Man;
+import org.classes.Person;
+import org.classes.PersonInvocationHandler;
+
+import java.lang.reflect.Proxy;
+
 public class App {
     public static void main(String[] args) {
-        
+        Man mohan = new Man("Mohan", 30, "Delhi", "India");
+        ClassLoader mohanClassLoader = mohan.getClass().getClassLoader(); //reflection
+        Class[] interfaces = mohan.getClass().getInterfaces();
+        Person proxyMohan = (Person) Proxy.newProxyInstance(mohanClassLoader, interfaces, new PersonInvocationHandler(mohan));
+        proxyMohan.introduce(mohan.getName());
     }
 }
